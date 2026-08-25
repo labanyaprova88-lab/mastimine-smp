@@ -37,6 +37,10 @@
             -webkit-touch-callout: none;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         html, body {
             max-width: 100vw;
             overflow-x: hidden !important;
@@ -52,20 +56,65 @@
             touch-action: manipulation;
         }
 
-        /* Fixed Mobile Friendly Minecraft Background with Updated Image Link */
+        /* INTRO ANIMATION SCREEN */
+        #intro-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #040812;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+            transition: opacity 0.8s ease, visibility 0.8s;
+            will-change: opacity, visibility;
+        }
+
+        .intro-content {
+            text-align: center;
+            opacity: 0;
+            transform: scale(0.8);
+            animation: introTextAnimation 2.5s ease-in-out forwards;
+        }
+
+        .intro-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(1.8rem, 5vw, 3.8rem);
+            font-weight: 900;
+            color: #ffffff;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* PURPLE & AQUA GRADIENT FOR INTRO TEXT */
+        .intro-title span {
+            background: linear-gradient(135deg, #a855f7, #00d8ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
+        }
+
+        @keyframes introTextAnimation {
+            0% { opacity: 0; transform: scale(0.85) translateY(15px); }
+            30% { opacity: 1; transform: scale(1) translateY(0); }
+            75% { opacity: 1; transform: scale(1.02); }
+            100% { opacity: 0; transform: scale(1.08) translateY(-15px); }
+        }
+
+        /* Background Image Fixed with logo2.png */
         .bg-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            /* Dark Overlay for Text Readability */
-            background: linear-gradient(180deg, rgba(8, 13, 26, 0.85) 0%, rgba(8, 13, 26, 0.93) 100%),
-                        /* Background Image Link */
-                        url('https://cdn.discordapp.com/attachments/1476860381350858906/1540773683222814871/1787419456284.png?ex=6a8bd590&is=6a8a8410&hm=03886336bb7a258089373dcf798ac34e720f32cedc79625fc9cda94477e0893c&') no-repeat center center fixed;
-            /* Guarantees the image covers the screen without stretching */
+            background: linear-gradient(180deg, rgba(8, 13, 26, 0.75) 0%, rgba(8, 13, 26, 0.88) 100%),
+                        url('logo2.png') no-repeat center center fixed;
             background-size: cover; 
             z-index: -2;
+            transform: translateZ(0);
         }
 
         .grid-pattern {
@@ -81,12 +130,8 @@
             pointer-events: none;
         }
 
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #040507;
-        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #040507; }
         ::-webkit-scrollbar-thumb {
             background: linear-gradient(180deg, var(--secondary), var(--primary));
             border-radius: 10px;
@@ -101,8 +146,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(8, 13, 26, 0.85);
-            backdrop-filter: blur(15px);
+            background: rgba(8, 13, 26, 0.92);
             border-bottom: 1px solid rgba(0, 255, 136, 0.15);
             z-index: 1000;
         }
@@ -115,10 +159,10 @@
         }
 
         .nav-logo-img {
-            height: 38px;
-            width: auto;
-            object-fit: contain;
-            filter: drop-shadow(0 0 8px var(--primary-glow));
+            height: 42px;
+            width: 42px;
+            object-fit: cover;
+            border-radius: 8px;
         }
 
         .nav-logo-text {
@@ -129,10 +173,7 @@
             letter-spacing: 1px;
         }
 
-        .nav-logo-text span {
-            color: var(--primary);
-            text-shadow: 0 0 12px var(--primary-glow);
-        }
+        .nav-logo-text span { color: var(--primary); }
 
         .nav-right {
             display: flex;
@@ -154,10 +195,7 @@
             transition: 0.3s;
         }
 
-        .nav-links a:hover {
-            color: var(--primary);
-            text-shadow: 0 0 8px var(--primary-glow);
-        }
+        .nav-links a:hover { color: var(--primary); }
 
         .discord-btn {
             background: var(--discord);
@@ -170,16 +208,11 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(88, 101, 242, 0.35);
+            transition: all 0.2s ease;
             white-space: nowrap;
         }
 
-        .discord-btn:hover {
-            background: var(--discord-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(88, 101, 242, 0.5);
-        }
+        .discord-btn:hover { background: var(--discord-hover); }
 
         /* Hero Section */
         header {
@@ -194,37 +227,39 @@
         }
 
         .hero-badge {
-            background: linear-gradient(90deg, rgba(0, 255, 136, 0.1), rgba(0, 216, 255, 0.1));
+            background: rgba(0, 255, 136, 0.08);
             color: var(--primary);
             border: 1px solid rgba(0, 255, 136, 0.3);
-            padding: 8px 20px;
+            padding: 8px 24px;
             border-radius: 50px;
-            font-size: 0.8rem;
+            font-size: clamp(0.7rem, 2vw, 0.85rem);
             font-weight: 700;
             letter-spacing: 1.5px;
             text-transform: uppercase;
             margin-bottom: 25px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 0 20px rgba(0, 255, 136, 0.15);
             display: inline-flex;
             align-items: center;
             gap: 10px;
+            white-space: nowrap;
+            max-width: 95%;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        /* Main Hero Banner Logo */
         .hero-banner-logo {
             width: 100%;
-            max-width: 320px;
+            max-width: 280px;
             height: auto;
+            border-radius: 20px;
             display: block;
             margin: 0 auto 30px auto;
-            filter: drop-shadow(0 0 30px rgba(0, 216, 255, 0.35)) drop-shadow(0 0 12px rgba(0, 255, 136, 0.25));
             animation: floatLogo 4s ease-in-out infinite;
+            will-change: transform;
         }
 
         @keyframes floatLogo {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
+            50% { transform: translateY(-6px); }
         }
 
         header p {
@@ -254,8 +289,7 @@
             border-radius: 12px;
             cursor: pointer;
             text-decoration: none;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
+            transition: transform 0.2s ease;
             text-transform: uppercase;
             letter-spacing: 1px;
             display: inline-flex;
@@ -264,22 +298,12 @@
             gap: 10px;
         }
 
-        .btn:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 15px 35px rgba(0, 216, 255, 0.5);
-        }
+        .btn:hover { transform: translateY(-2px); }
 
         .btn-secondary {
             background: rgba(255, 255, 255, 0.05);
             color: var(--text-main);
             border: 1px solid rgba(0, 216, 255, 0.3);
-            box-shadow: none;
-            backdrop-filter: blur(10px);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(0, 216, 255, 0.15);
-            border-color: var(--secondary);
         }
 
         .container {
@@ -302,12 +326,8 @@
             margin-bottom: 10px;
         }
 
-        .section-title p {
-            color: var(--text-sub);
-            font-size: 1rem;
-        }
+        .section-title p { color: var(--text-sub); font-size: 1rem; }
 
-        /* Features Section */
         .features {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -317,18 +337,15 @@
 
         .card {
             background: var(--bg-card);
-            backdrop-filter: blur(16px);
             padding: 30px 25px;
             border-radius: 20px;
             border: 1px solid rgba(0, 255, 136, 0.15);
-            transition: all 0.3s ease;
+            transition: transform 0.2s ease, border-color 0.2s ease;
         }
 
         .card:hover {
-            transform: translateY(-8px);
-            background: var(--bg-card-hover);
+            transform: translateY(-4px);
             border-color: var(--secondary);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 25px rgba(0, 216, 255, 0.15);
         }
 
         .card-icon {
@@ -345,27 +362,14 @@
             margin-bottom: 20px;
         }
 
-        .card h3 {
-            color: #fff;
-            font-size: 1.25rem;
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
+        .card h3 { color: #fff; font-size: 1.25rem; margin-bottom: 10px; font-weight: 700; }
+        .card p { color: var(--text-sub); font-size: 0.92rem; line-height: 1.6; }
 
-        .card p {
-            color: var(--text-sub);
-            font-size: 0.92rem;
-            line-height: 1.6;
-        }
-
-        /* Server Connection Box */
         .server-connection {
-            background: linear-gradient(145deg, rgba(15, 23, 42, 0.85), rgba(8, 13, 26, 0.95));
-            backdrop-filter: blur(20px);
+            background: rgba(15, 23, 42, 0.95);
             padding: 40px 25px;
             border-radius: 24px;
             border: 1px solid rgba(0, 216, 255, 0.3);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
             margin-bottom: 80px;
         }
 
@@ -377,7 +381,7 @@
         }
 
         .ip-card {
-            background: rgba(4, 8, 18, 0.75);
+            background: rgba(4, 8, 18, 0.85);
             padding: 25px;
             border-radius: 16px;
             border: 1px solid rgba(0, 255, 136, 0.15);
@@ -418,15 +422,11 @@
             font-weight: 700;
             font-size: 0.8rem;
             flex-shrink: 0;
-            transition: all 0.2s;
+            transition: background 0.2s;
         }
 
-        .copy-btn:hover {
-            background: var(--primary);
-            color: #000;
-        }
+        .copy-btn:hover { background: var(--primary); color: #000; }
 
-        /* Rules Section */
         .rules-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -435,7 +435,6 @@
 
         .rule-item {
             background: var(--bg-card);
-            backdrop-filter: blur(12px);
             padding: 20px;
             border-radius: 16px;
             display: flex;
@@ -458,23 +457,13 @@
             font-size: 0.95rem;
         }
 
-        .rule-text h4 {
-            color: #fff;
-            margin-bottom: 5px;
-            font-size: 1rem;
-        }
+        .rule-text h4 { color: #fff; margin-bottom: 5px; font-size: 1rem; }
+        .rule-text p { color: var(--text-sub); font-size: 0.85rem; line-height: 1.4; }
 
-        .rule-text p {
-            color: var(--text-sub);
-            font-size: 0.85rem;
-            line-height: 1.4;
-        }
-
-        /* Scroll Reveal Base Classes */
         .reveal {
             opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s ease;
+            transform: translateY(20px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
         }
 
         .reveal.active {
@@ -482,11 +471,10 @@
             transform: translateY(0);
         }
 
-        /* Toast Notification Structure */
         #toast {
             visibility: hidden;
             min-width: 250px;
-            background: linear-gradient(135deg, #051911, #082436);
+            background: #051911;
             color: var(--primary);
             border: 1px solid var(--primary);
             text-align: center;
@@ -499,60 +487,66 @@
             transform: translateX(-50%);
             font-size: 0.95rem;
             font-weight: 700;
-            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.35);
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
             opacity: 0;
-            transition: opacity 0.3s, bottom 0.3s ease-in-out;
+            transition: opacity 0.3s ease;
         }
 
-        #toast.show {
-            visibility: visible;
-            opacity: 1;
-            bottom: 40px;
-        }
+        #toast.show { visibility: visible; opacity: 1; }
 
         footer {
             text-align: center;
             padding: 30px 20px;
-            background: rgba(4, 8, 18, 0.95);
+            background: #040812;
             color: var(--text-sub);
             border-top: 1px solid rgba(0, 255, 136, 0.1);
             font-size: 0.9rem;
         }
 
-        footer span {
-            color: var(--primary);
-            font-weight: 600;
-        }
+        footer span { color: var(--primary); font-weight: 600; }
 
+        /* Mobile FPS & Visual Optimization */
         @media (max-width: 768px) {
             nav .nav-links { display: none; }
             nav { padding: 10px 4%; }
             header { padding-top: 110px; }
-            .hero-banner-logo { max-width: 240px; }
+            .hero-banner-logo { max-width: 200px; }
             .discord-btn span { display: none; }
             .discord-btn { padding: 8px 12px; }
             .btn-group { flex-direction: column; }
             .btn { width: 100%; }
             .server-connection { padding: 25px 15px; }
+            .hero-badge { padding: 6px 14px; }
+            
+            .bg-overlay { 
+                background: linear-gradient(180deg, rgba(8, 13, 26, 0.8) 0%, rgba(8, 13, 26, 0.92) 100%),
+                            url('logo2.png') no-repeat center center;
+                background-size: cover;
+            }
+            .grid-pattern { display: none; }
         }
     </style>
 </head>
 <body>
 
+    <!-- INTRO ANIMATION SCREEN -->
+    <div id="intro-screen">
+        <div class="intro-content">
+            <h1 class="intro-title">WELCOME TO <span>MASTIMINE SMP</span></h1>
+        </div>
+    </div>
+
     <div class="bg-overlay"></div>
     <div class="grid-pattern"></div>
 
-    <!-- Toast Notification -->
     <div id="toast"><i class="fa-solid fa-circle-check"></i> <span id="toast-msg">IP Copied!</span></div>
 
     <nav>
-        <!-- Custom Logo Area -->
-        <a href="#" class="nav-logo">
-            <img src="https://cdn.discordapp.com/attachments/1476860381350858906/1533795109785567243/ei_1785673669464-removebg-preview_2.png?ex=6a8c2782&is=6a8ad602&hm=cfa841dc81e30601789ce1a66f969eb5fe9e90fb521596ade63fc4ebc1f7b081&" alt="MastiMine Logo" class="nav-logo-img">
+        <a href="#top" class="nav-logo">
+            <img src="logo.png" alt="MastiMine Logo" class="nav-logo-img">
             <span class="nav-logo-text">MASTIMINE <span>SMP</span></span>
         </a>
         
@@ -569,27 +563,22 @@
         </div>
     </nav>
 
-    <header>
+    <header id="top">
         <div class="hero-badge">
-            <i class="fa-solid fa-signal"></i> Bangladesh's Premier 24/7 SMP
+            <i class="fa-solid fa-crown"></i> BD BEST MINECRAFT SERVER EVER
         </div>
         
-        <!-- Main Logo Image -->
-        <img src="https://cdn.discordapp.com/attachments/1476860381350858906/1533795109785567243/ei_1785673669464-removebg-preview_2.png?ex=6a8c2782&is=6a8ad602&hm=cfa841dc81e30601789ce1a66f969eb5fe9e90fb521596ade63fc4ebc1f7b081&" alt="MastiMine SMP Logo" class="hero-banner-logo">
+        <img src="logo.png" alt="MastiMine SMP Logo" class="hero-banner-logo">
 
-        <!-- Action Buttons -->
         <div class="btn-group">
             <a href="#join" class="btn"><i class="fa-solid fa-gamepad"></i> Join Server</a>
             <a href="https://discord.gg/mastiminesmp" target="_blank" class="btn btn-secondary"><i class="fa-brands fa-discord"></i> Join Discord</a>
         </div>
 
-        <!-- Description Paragraph -->
         <p>Experience ultra low ping, zero lag survival gameplay with an unbelievable community. Supports Java & Bedrock (Mobile, PC, Console)!</p>
     </header>
 
     <div class="container">
-        
-        <!-- Features Section -->
         <div class="section-title reveal" id="about">
             <h2>Why Choose MastiMine?</h2>
             <p>Built by gamers, for gamers. Here is what makes us special.</p>
@@ -617,7 +606,6 @@
             </div>
         </div>
 
-        <!-- Connection Details -->
         <div class="server-connection reveal" id="join">
             <div class="section-title" style="margin-bottom: 20px;">
                 <h2>Server IP & Port Details</h2>
@@ -648,7 +636,6 @@
             </div>
         </div>
 
-        <!-- Rules Section -->
         <div id="rules">
             <div class="section-title reveal">
                 <h2>Server Guidelines & Rules</h2>
@@ -721,19 +708,31 @@
     </footer>
 
     <script>
-        // Guaranteed Fallback Universal Copy Function
+        document.addEventListener('DOMContentLoaded', () => {
+            const introScreen = document.getElementById('intro-screen');
+            const hasSeenIntro = sessionStorage.getItem('hasSeenMastiMineIntro');
+
+            if (hasSeenIntro) {
+                introScreen.style.display = 'none';
+            } else {
+                sessionStorage.setItem('hasSeenMastiMineIntro', 'true');
+                setTimeout(() => {
+                    introScreen.style.opacity = '0';
+                    introScreen.style.visibility = 'hidden';
+                }, 2400);
+            }
+        });
+
         function copyText(elementId, customMessage) {
             const textToCopy = document.getElementById(elementId).innerText;
 
             if (navigator.clipboard && window.isSecureContext) {
-                // Primary Clipboard API (Works in HTTPS)
                 navigator.clipboard.writeText(textToCopy).then(() => {
                     showToast(customMessage || 'IP Copied!');
                 }).catch(() => {
                     fallbackCopyText(textToCopy, customMessage);
                 });
             } else {
-                // Fallback for HTTP or Older Browsers/Mobile
                 fallbackCopyText(textToCopy, customMessage);
             }
         }
@@ -769,7 +768,6 @@
             }, 2500);
         }
 
-        // Scroll Reveal Trigger
         function revealOnScroll() {
             const reveals = document.querySelectorAll('.reveal');
             const windowHeight = window.innerHeight;
