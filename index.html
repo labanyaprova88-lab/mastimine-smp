@@ -163,6 +163,11 @@
             width: 42px;
             object-fit: cover;
             border-radius: 8px;
+            -webkit-mask-image: linear-gradient(135deg, rgba(0,0,0,1) 40%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,1) 60%);
+            mask-image: linear-gradient(135deg, rgba(0,0,0,1) 40%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,1) 60%);
+            -webkit-mask-size: 300% 300%;
+            mask-size: 300% 300%;
+            animation: logoShine 3.5s infinite linear;
         }
 
         .nav-logo-text {
@@ -253,13 +258,31 @@
             border-radius: 20px;
             display: block;
             margin: 0 auto 30px auto;
-            animation: floatLogo 4s ease-in-out infinite;
-            will-change: transform;
+            animation: floatLogo 4s ease-in-out infinite, logoGlowShine 3s ease-in-out infinite alternate;
+            will-change: transform, filter;
         }
 
         @keyframes floatLogo {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-6px); }
+            50% { transform: translateY(-8px); }
+        }
+
+        /* Shine & Glow Animations */
+        @keyframes logoShine {
+            0% { -webkit-mask-position: 100% 100%; mask-position: 100% 100%; }
+            100% { -webkit-mask-position: 0% 0%; mask-position: 0% 0%; }
+        }
+
+        @keyframes logoGlowShine {
+            0% {
+                filter: drop-shadow(0 0 8px rgba(0, 255, 136, 0.3));
+            }
+            50% {
+                filter: drop-shadow(0 0 25px rgba(0, 255, 136, 0.85)) brightness(1.2);
+            }
+            100% {
+                filter: drop-shadow(0 0 35px rgba(0, 216, 255, 0.95)) brightness(1.35);
+            }
         }
 
         header p {
@@ -785,4 +808,4 @@
         window.addEventListener('load', revealOnScroll);
     </script>
 </body>
-</html>
+    </html>
